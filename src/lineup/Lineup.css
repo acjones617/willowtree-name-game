@@ -1,0 +1,40 @@
+:local(.lineUp) {
+  overflow: auto;
+}
+
+:local(.faceContainer) {
+  cursor: pointer;
+  float: left;
+  position: relative;
+  outline: none;
+  overflow: auto;
+  min-width: 100px;
+  width: 20%;
+}
+
+:local(.faceContainer) img {
+  box-sizing: border-box;
+  border: 10px solid white;
+  border-radius: 50px;
+  width: 100%;
+}
+
+:local(.faceContainer) :local(.active) {
+  border-color: black;
+}
+
+:local(.faceContainer) :local(.incorrect) {
+  border-color: red;
+}
+
+:local(.faceContainer) :local(.correct) {
+  border-color: green;
+}
+
+:local(.incorrect) {
+  color: red;
+}
+
+:local(.correct) {
+  color: green;
+}
