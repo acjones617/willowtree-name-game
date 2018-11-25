@@ -7,7 +7,6 @@ class Quiz extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      eligibleEmployees: props.employees,
       lineupEmployees: [],
       employeeToGuess: null,
       frozen: false,
@@ -22,7 +21,7 @@ class Quiz extends React.Component {
   // TODO consider adding isCorrect direclty to employee object?
   getNewLineUp() {
     this.lineupCount++;
-    const lineupEmployees = getRandomSelection(this.state.eligibleEmployees, NUM_CHOICES);
+    const lineupEmployees = getRandomSelection(this.props.employees, NUM_CHOICES);
     this.setState(Object.assign(this.state, {
       lineupEmployees: lineupEmployees,
       employeeToGuess: getRandomSelection(lineupEmployees, 1),
@@ -37,7 +36,7 @@ class Quiz extends React.Component {
     if (isCorrect) {
       setTimeout(() => this.getNewLineUp(), DELAY_AFTER_CORRECT);
     }
-    this.props.onClick(isCorrect);
+    this.props.onGuess(isCorrect);
   }
 
   render() {
@@ -50,7 +49,7 @@ class Quiz extends React.Component {
             employees={this.state.lineupEmployees}
             employeeToGuess={this.state.employeeToGuess}
             frozen={this.state.frozen}
-            onClick={(isCorrect) => this.handleGuess(isCorrect)}
+            onGuess={(isCorrect) => this.handleGuess(isCorrect)}
           />
         </div>
       );

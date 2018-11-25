@@ -6,10 +6,6 @@ import { KeyCodes } from '../utils/constants.js';
 class Face extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isSelected: props.employee.isSelected,
-      employee: props.employee,
-    };
     this.faceRef = React.createRef();
   }
 
@@ -21,7 +17,6 @@ class Face extends React.Component {
 
   handleGuess() {
     if (!this.props.frozen) {
-      this.setState(Object.assign(this.state, { isSelected: true }));
       this.props.onClick();
     }
   }
@@ -40,24 +35,24 @@ class Face extends React.Component {
            onClick={this.handleGuess.bind(this)}
            onKeyDown={(e) => this.handleKeydown(e)}>
             <img className={this.getImgClassName()}
-              src={this.state.employee.headshot.url}
-              alt={this.state.employee.headshot.alt}/>
+              src={this.props.employee.headshot.url}
+              alt={this.props.employee.headshot.alt}/>
             {this.maybeRenderName()}
       </div>
     );
   }
 
   maybeRenderName() {
-    if (this.state.isSelected) {
+    if (this.props.isSelected) {
       const classes = this.props.isCorrect ? styles.correct : styles.incorrect;
       return <h4 className={classes}>
-      {this.state.employee.firstName} {this.state.employee.lastName}</h4>;
+      {this.props.employee.firstName} {this.props.employee.lastName}</h4>;
     }
     return null;
   }
 
   getImgClassName() {
-    if (this.state.isSelected) {
+    if (this.props.isSelected) {
       return this.props.isCorrect ? styles.correct : styles.incorrect;
     }
     if (this.props.isActive) {

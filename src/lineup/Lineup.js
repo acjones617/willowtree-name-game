@@ -4,8 +4,18 @@ import styles from './Lineup.css';
 import { KeyCodes } from '../utils/constants.js';
 
 const KeyDirections = {
-  'RIGHT': new Set([KeyCodes.RIGHT, KeyCodes.DOWN]),
-  'LEFT': new Set([KeyCodes.LEFT, KeyCodes.UP]),
+  'RIGHT': new Set([
+    KeyCodes.RIGHT,
+    KeyCodes.DOWN,
+    KeyCodes.K,
+    KeyCodes.L
+  ]),
+  'LEFT': new Set([
+    KeyCodes.LEFT,
+    KeyCodes.UP,
+    KeyCodes.H,
+    KeyCodes.J
+  ]),
 };
 
 class Lineup extends React.Component {
@@ -32,7 +42,7 @@ class Lineup extends React.Component {
     this.setState(Object.assign(this.state, {
       selectedEmployees: selectedEmployees,
     }));
-    this.props.onClick(isCorrect);
+    this.props.onGuess(isCorrect);
   }
 
   findNextUnselected() {

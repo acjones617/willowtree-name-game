@@ -14,7 +14,7 @@ class App extends React.Component {
     fetch('https://willowtreeapps.com/api/v1.0/profiles/')
       .then(response => response.json())
       .then(response => this.initializeState(response))
-      .catch(error => console.log(error)); // TODO: fix
+      .catch(error => console.log(error)); // TODO: handle error
   }
 
   initializeState(employees) {
@@ -33,23 +33,22 @@ class App extends React.Component {
     // increase score
   }
 
-  renderQuiz() {
-    if (this.state.employees.length) {
-      const handleGuess = isCorrect => this.handleGuess(isCorrect);
-      return (<Quiz
-            employees={this.state.employees}
-            onClick={handleGuess}
-            onKeyDown={handleGuess}
-            />);
-    }
-    return null;
-  }
-
   render() {
     return (
       <div className={styles.app}>{this.renderQuiz()}</div>
     );
   }
+
+  renderQuiz() {
+    if (this.state.employees.length) {
+      return (<Quiz
+              employees={this.state.employees}
+              onGuess={isCorrect => this.handleGuess(isCorrect)}
+            />);
+    }
+    return null;
+  }
+
 };
 
 export default App;
