@@ -1,0 +1,7 @@
+:local(button), :local(label) {
+  margin: 5px 10px;
+}
+
+:local(.container) {
+  margin: 10px 0;
+}

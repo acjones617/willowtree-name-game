@@ -16,7 +16,7 @@ class Face extends React.Component {
   }
 
   handleGuess() {
-    if (!this.props.frozen) {
+    if (!this.props.frozen && !this.props.isSelected) {
       this.props.onClick();
     }
   }
@@ -29,35 +29,52 @@ class Face extends React.Component {
 
   render() {
     return (
-      <div className={styles.faceContainer}
+      <div className={this.getFaceClassName()}
            tabIndex='0'
            ref={this.faceRef}
            onClick={this.handleGuess.bind(this)}
            onKeyDown={(e) => this.handleKeydown(e)}>
-            <img className={this.getImgClassName()}
-              src={this.props.employee.headshot.url}
-              alt={this.props.employee.headshot.alt}/>
+            {this.maybeRenderImg()}
             {this.maybeRenderName()}
       </div>
     );
   }
 
-  maybeRenderName() {
-    if (this.props.isSelected) {
-      const classes = this.props.isCorrect ? styles.correct : styles.incorrect;
-      return <h4 className={classes}>
-      {this.props.employee.firstName} {this.props.employee.lastName}</h4>;
+  maybeRenderImg() {
+    if (this.props.isSelected || this.props.faceFirst) {
+      return (
+        <img
+        src={this.props.employee.headshot.url}
+        alt={this.props.employee.headshot.alt}/>
+      );
     }
     return null;
   }
 
-  getImgClassName() {
+  maybeRenderName() {
+    if (this.props.isSelected || !this.props.faceFirst) {
+      let classes = styles.textName;
+      if (this.props.isSelected) {
+        classes += ` ${this.props.isCorrect ? styles.correct : styles.incorrect}`;
+      }
+      return (
+        <h4 className={classes}>
+          {this.props.employee.firstName} {this.props.employee.lastName}
+        </h4>
+      );
+    }
+    return null;
+  }
+
+  getFaceClassName() {
+    let classes = styles.faceContainer;
     if (this.props.isSelected) {
-      return this.props.isCorrect ? styles.correct : styles.incorrect;
+      classes += ` ${this.props.isCorrect ? styles.correct : styles.incorrect}`;
     }
     if (this.props.isActive) {
-      return styles.active;
+      classes += ` ${styles.active}`;
     }
+    return classes;
   }
 }
 
