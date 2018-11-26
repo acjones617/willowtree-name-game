@@ -1,10 +1,10 @@
 import React from 'react';
-import Lineup from './Lineup.js';
-import Question from './Question.js';
-import OptionsModal from './quizmodes/OptionsModal.js'
-import getRandomSelection from '../utils/randomSelection.js';
+import Lineup from './Lineup';
+import Question from './Question';
+import OptionsModal from './quizmodes/OptionsModal'
+import getRandomSelection from '../utils/randomSelection';
 import styles from './Lineup.css';
-import { NUM_CHOICES, DELAY_AFTER_CORRECT, FilterModes, ToggleModes } from '../utils/constants.js';
+import { NUM_CHOICES, DELAY_AFTER_CORRECT, FilterModes, ToggleModes } from '../utils/constants';
 import { Jumbotron } from 'react-bootstrap';
 
 class LineupQuiz extends React.Component {

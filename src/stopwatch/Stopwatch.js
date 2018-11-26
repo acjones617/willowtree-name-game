@@ -1,5 +1,5 @@
 import React from 'react';
-import formatTime from '../utils/formatTime.js'
+import formatTime from '../utils/formatTime'
 
 class Stopwatch extends React.Component {
 

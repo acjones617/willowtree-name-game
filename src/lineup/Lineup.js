@@ -1,8 +1,8 @@
 import React from 'react';
-import Face from './Face.js';
+import Face from './Face';
 import styles from './Lineup.css';
-import getRandomSelection from '../utils/randomSelection.js';
-import { KeyCodes, DELAY_BEFORE_HINT, ToggleModes } from '../utils/constants.js';
+import getRandomSelection from '../utils/randomSelection';
+import { KeyCodes, DELAY_BEFORE_HINT, ToggleModes } from '../utils/constants';
 
 const KeyDirections = {
   'RIGHT': new Set([

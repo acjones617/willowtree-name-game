@@ -1,5 +1,5 @@
 import React from 'react';
-import formatTime from '../utils/formatTime.js';
+import formatTime from '../utils/formatTime';
 import styles from './Score.css';
 import { Label } from 'react-bootstrap';
 

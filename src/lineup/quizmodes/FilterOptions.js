@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import { FilterModes } from '../../utils/constants.js';
+import { FilterModes } from '../../utils/constants';
 import styles from './quizmodes.css';
 
 class FilterOptions extends React.Component {

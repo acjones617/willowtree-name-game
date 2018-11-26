@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Lineup.css';
-import { KeyCodes } from '../utils/constants.js';
+import { KeyCodes } from '../utils/constants';
 
 // TODO: also make active if user tabs to element?
 class Face extends React.Component {

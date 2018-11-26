@@ -1,5 +1,4 @@
 const getRandomInteger = function(maxExclusive) {
-  // TODO: check that max > min
   return Math.floor(Math.random() * maxExclusive);
 }
 

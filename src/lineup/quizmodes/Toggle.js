@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToggleModes } from '../../utils/constants.js';
+import { ToggleModes } from '../../utils/constants';
 import { ToggleButton, Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 const Toggle = function(props) {

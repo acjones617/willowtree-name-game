@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert, Button, Modal } from 'react-bootstrap';
-import FilterOptions from './FilterOptions.js';
-import Toggles from './Toggles.js';
+import FilterOptions from './FilterOptions';
+import Toggles from './Toggles';
 
 class OptionsModal extends React.Component {
   constructor(props) {

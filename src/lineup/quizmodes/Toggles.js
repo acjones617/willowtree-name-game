@@ -1,5 +1,5 @@
 import React from 'react';
-import Toggle from './Toggle.js';
+import Toggle from './Toggle';
 import styles from './quizmodes.css';
 
 const Toggles = function(props) {
