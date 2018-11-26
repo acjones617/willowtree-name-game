@@ -2,6 +2,10 @@ import React from 'react';
 import Toggle from './Toggle';
 import styles from './quizmodes.css';
 
+/**
+ * Component handling how the game is played, rendering a toggle
+ * for each mode.
+ */
 const Toggles = function(props) {
   return (
     <div className={styles.container}>

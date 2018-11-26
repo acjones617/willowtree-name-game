@@ -1,6 +1,7 @@
 import React from 'react';
 import formatTime from '../utils/formatTime'
 
+/** Displays the stopwatch counting up from 0 for each round. */
 class Stopwatch extends React.Component {
 
   componentDidMount() {

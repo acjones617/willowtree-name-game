@@ -6,6 +6,9 @@ import scoreConstants from './score/scoreConstants';
 import Stopwatch from './stopwatch/Stopwatch';
 import { Alert, Button } from 'react-bootstrap';
 
+/**
+ * Top-level component. Makes call to API. Coordinates between quiz and scoring.
+ */
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -31,6 +34,10 @@ class App extends React.Component {
     clearInterval(this.timeInterval);
   }
 
+  /**
+   * Filters and stores the array of employees returned from the API.
+   * @param {Array} employees - The parsed list of employees.
+   */
   initializeState(employees) {
     this.setState({
       employees: employees.filter(employee => {
@@ -43,6 +50,9 @@ class App extends React.Component {
     });
   }
 
+  /**
+   * Triggers the display of the scoreboard and the updating of the score.
+   */
   startKeepingScore() {
     this.keepScore = true;
     this.setState({ startTime: new Date().getTime() });
@@ -50,6 +60,10 @@ class App extends React.Component {
       scoreConstants.DECREASE_SCORE_TIME_MS);
   }
 
+  /**
+   * Updates the score and the frozen state of the game given that a guess was made.
+   * @param {boolean} isCorrect - true if the guess was correct.
+   */
   handleGuess(isCorrect) {
     if (!this.keepScore) {
       this.setState({ isFrozen: isCorrect });
@@ -74,6 +88,10 @@ class App extends React.Component {
     });
   }
 
+  /**
+   * Function that decreases the points available in the current round.
+   * No-op if no round is currently running.
+   */
   decreaseCurrentRound() {
     if (!this.state.isFrozen) {
       const score = { ...this.state.score };
@@ -83,6 +101,10 @@ class App extends React.Component {
     }
   }
 
+  /**
+   * Updates the score and the frozen state of the game given that a new lineup
+   * was generated.
+   */
   handleNewLineup() {
     const score = { ...this.state.score };
     score.currentRound = scoreConstants.POINTS_START;
@@ -94,6 +116,9 @@ class App extends React.Component {
     });
   }
 
+  /**
+   * Updates the score to zero but keeps the high score.
+   */
   handleRefresh() {
     this.setState({
       score: Object.assign(this.state.score, scoreConstants.INITIAL_SCORE_STATE),

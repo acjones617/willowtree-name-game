@@ -2,7 +2,9 @@ import React from 'react';
 import styles from './Lineup.css';
 import { KeyCodes } from '../utils/constants';
 
-// TODO: also make active if user tabs to element?
+/**
+ * Component managing individual faces in the lineup.
+ */
 class Face extends React.Component {
   constructor(props) {
     super(props);
@@ -15,6 +17,10 @@ class Face extends React.Component {
     }
   }
 
+  /**
+   * Handles keyboard event from the user, equating "enter" with a click.
+   * @param {Event} the event object.
+   */
   handleKeydown(e) {
     if (this.props.isActive && e.keyCode === KeyCodes.ENTER) {
       this.props.onClick();
@@ -35,6 +41,10 @@ class Face extends React.Component {
     );
   }
 
+  /**
+   * Will render the image if we are not in reverse mode or if
+   * the face or name has already been selected
+   */
   maybeRenderImg() {
     if (this.props.isSelected || this.props.faceFirst) {
       return (
@@ -46,6 +56,10 @@ class Face extends React.Component {
     return null;
   }
 
+  /**
+   * Will render the name if we are in reverse mode or if
+   * the face or name has already been selected
+   */
   maybeRenderName() {
     if (this.props.isSelected || !this.props.faceFirst) {
       let classes = styles.textName;

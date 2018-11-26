@@ -2,6 +2,13 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Try it out
+
+`git clone https://github.com/acjones617/willowtree-name-game.git`
+`cd willowtree-name-game/`
+`npm install`
+`npm start`
+
 ## How to play
 
 You will be presented with five faces and asked to identify the listed name. To make a guess, click on one of the faces. If correct, you will see a green highlighting and will shortly be introduced with five new faces and a new name. If incorrect, you will see a red highlighting. In either case, the name corresponding to the face will be displayed.

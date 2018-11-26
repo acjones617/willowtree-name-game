@@ -3,6 +3,7 @@ import formatTime from '../utils/formatTime';
 import styles from './Score.css';
 import { Label } from 'react-bootstrap';
 
+/** Displays the score */
 const Score = function(props) {
   return (
     <div className={styles.currentGameContainer}>

@@ -3,6 +3,10 @@ import { Alert, Button, Modal } from 'react-bootstrap';
 import FilterOptions from './FilterOptions';
 import Toggles from './Toggles';
 
+/**
+ * Component handling the modal containing the filter modes and the game play
+ * toggles.
+ */
 class OptionsModal extends React.Component {
   constructor(props) {
     super(props);
@@ -20,6 +24,11 @@ class OptionsModal extends React.Component {
     this.setState({ showModal: false });
   }
 
+  /**
+   * Determines if the selected modes and toggles have changed since the modal
+   * was opened.
+   * @returns {boolean} true if it has changed.
+   */
   hasModeToggleChanged() {
     return this.state.selectedMode !== this.props.mode ||
       Object.keys(this.state.selectedToggles).some(

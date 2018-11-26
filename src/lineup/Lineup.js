@@ -19,6 +19,10 @@ const KeyDirections = {
   ]),
 };
 
+/**
+ * Handles user navigation of the lineup with shortcuts and toggling
+ * whether a face has been selected or removed from the lineup.
+ */
 class Lineup extends React.Component {
   constructor(props) {
     super(props);
@@ -42,6 +46,9 @@ class Lineup extends React.Component {
     clearInterval(this.hintInterval);
   }
 
+  /**
+   * If we are in hint mode, triggers the slow removal of faces from the lineup.
+   */
   beginHintMode() {
     this.hintInterval = setInterval(() => {
       const indicesToHide = [];
@@ -60,6 +67,12 @@ class Lineup extends React.Component {
     }, DELAY_BEFORE_HINT);
   }
 
+  /**
+   * Handles a guess to a given face by setting the face as selected, if
+   * it has not been selected already.
+   * @param {number} index - the index of the selected face.
+   * @param {boolean} isCorrect - true if guess was on the correct face.
+   */
   handleGuess(index, isCorrect) {
     if (this.props.isFrozen || this.state.selectedEmployees[index]) {
       return;
@@ -70,10 +83,20 @@ class Lineup extends React.Component {
     this.props.onGuess(isCorrect);
   }
 
+  /**
+   * For navigating with keyboard shortcuts, can a given index be navigated to,
+   * given whether or not that index has already been selected or removed?
+   * @param {number} i - the index of the selected face.
+   * @returns {boolean} true if the user can navigate to the given index.
+   */
   canMakeActive(i) {
     return !this.state.selectedEmployees[i] && !this.state.removedEmployees[i];
   }
 
+  /**
+   * Navigating to the "right", finds the next navigable face
+   * @returns {number} the index of the next unselected face.
+   */
   findNextUnselected() {
     let startIndex;
     const lineupLength = this.props.employees.length;
@@ -93,6 +116,10 @@ class Lineup extends React.Component {
     }
   }
 
+  /**
+   * Navigating to the "left", find the next navigable face
+   * @returns {number} the index of the next unselected face.
+   */
   findPreviousUnselected() {
     const lineupLength = this.props.employees.length;
     const activeEmployee = this.state.activeEmployee;
@@ -112,6 +139,11 @@ class Lineup extends React.Component {
     }
   }
 
+  /**
+   * Handles a keyboard event from user trying to move the cursor.
+   * No-op if we are in between rounds.
+   * @param {Event} the event object
+   */
   handleMove(e) {
     if (this.props.isFrozen) {
       return;

@@ -3,6 +3,10 @@ import { Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { FilterModes } from '../../utils/constants';
 import styles from './quizmodes.css';
 
+/**
+ * Component handling how the pool of employees is filtered, rendering
+ * a button for each filtering mode.
+ */
 class FilterOptions extends React.Component {
   render() {
     return (

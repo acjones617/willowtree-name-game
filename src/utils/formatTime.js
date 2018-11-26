@@ -1,3 +1,8 @@
+/**
+ * Formats a time into "mm:ss"
+ * @param {number} timeInMS - the number of milliseconds to convert to "mm:ss"
+ * @return {string} the formatted time.
+ */
 const formatTime = function(timeInMs) {
   if (timeInMs <= 0) {
     return "0:00";
