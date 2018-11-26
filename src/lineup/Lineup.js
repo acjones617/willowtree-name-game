@@ -8,14 +8,14 @@ const KeyDirections = {
   'RIGHT': new Set([
     KeyCodes.RIGHT,
     KeyCodes.DOWN,
-    KeyCodes.K,
-    KeyCodes.L
+    KeyCodes.L,
+    KeyCodes.J,
   ]),
   'LEFT': new Set([
     KeyCodes.LEFT,
     KeyCodes.UP,
     KeyCodes.H,
-    KeyCodes.J
+    KeyCodes.K,
   ]),
 };
 

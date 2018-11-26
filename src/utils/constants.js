@@ -15,7 +15,7 @@ export const KeyCodes = Object.freeze({
 export const FilterModes = Object.freeze({
   Default: Object.freeze({
     value: 'Default',
-    name: 'Include everyone',
+    name: 'All',
     desc: 'Play with a pool of all current and former employees of WillowTree.',
     filterFunc: (() => true),
   }),
@@ -27,7 +27,7 @@ export const FilterModes = Object.freeze({
   }),
   Mat: Object.freeze({
     value: 'Mat',
-    name: 'Name starts with Mat',
+    name: '"Mat\'s"',
     desc: 'Limit to people whose name begins with "Mat".',
     filterFunc: (employee => employee.firstName.startsWith('Mat')),
   }),

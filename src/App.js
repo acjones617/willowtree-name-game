@@ -3,6 +3,7 @@ import styles from './App.css';
 import LineupQuiz from './lineup/LineupQuiz.js';
 import Score from './score/Score.js';
 import Stopwatch from './stopwatch/Stopwatch.js';
+import { Alert, Button } from 'react-bootstrap';
 
 class App extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class App extends React.Component {
       employees: [],
       score: score,
       startTime: new Date().getTime(),
+      error: false,
     }
     this.filteredEmployeesByMode = {};
   }
@@ -28,9 +30,7 @@ class App extends React.Component {
     fetch('https://willowtreeapps.com/api/v1.0/profiles/')
       .then(response => response.json())
       .then(response => this.initializeState(response))
-      .catch(error => console.log(error)); // TODO: handle error
-
-    this.timeInterval = setInterval(() => this.decreaseCurrentRound(), 200);
+      .catch(() => this.setState({ error: true }));
   }
 
   componentWillUnmount() {
@@ -49,7 +49,16 @@ class App extends React.Component {
     });
   }
 
+  startKeepingScore() {
+    this.keepScore = true;
+    this.setState({ startTime: new Date().getTime() });
+    this.timeInterval = setInterval(this.decreaseCurrentRound.bind(this), 200);
+  }
+
   handleGuess(isCorrect) {
+    if (!this.keepScore) {
+      return;
+    }
     const score = { ...this.state.score };
     if (isCorrect) {
       const timeToGuess = new Date().getTime() - this.state.startTime;
@@ -61,7 +70,7 @@ class App extends React.Component {
       this.frozen = true;
     } else {
       score.incorrectGuesses++;
-      score.totalScore -= 200;
+      score.totalScore -= 250;
     }
 
     this.setState({ score });
@@ -79,7 +88,7 @@ class App extends React.Component {
     const score = { ...this.state.score };
     score.currentRound = 1000;
     this.frozen = false;
-    this.setState({ 
+    this.setState({
       score: score,
       startTime: new Date().getTime(),
     });
@@ -93,13 +102,36 @@ class App extends React.Component {
   }
 
   render() {
+    if (this.state.error) {
+      return <Alert>Sorry, technical difficulties. Try again later.</Alert>;
+    }
     return (
       <div className={styles.app}>
-        <Score {...this.state.score} />
-        <Stopwatch start={this.state.startTime} />
+        <h1 className={styles.appHeader}>WillowTree Name Game</h1>
+        {this.renderScore()}
         {this.renderQuiz()}
       </div>
     );
+  }
+
+  renderScore() {
+    if (this.keepScore) {
+      return (
+        <React.Fragment>
+          <Score {...this.state.score} />
+          <Stopwatch start={this.state.startTime} />
+        </React.Fragment>
+      );
+    } else {
+      return (
+        <Button
+            title="Score"
+            bsStyle="info"
+            onClick={this.startKeepingScore.bind(this)}>
+              Keep Score?
+        </Button>
+      );
+    }
   }
 
   renderQuiz() {

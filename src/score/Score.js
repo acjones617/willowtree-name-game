@@ -1,7 +1,7 @@
 import React from 'react';
 import formatTime from '../utils/formatTime.js';
 import styles from './Score.css';
-import { Badge } from 'react-bootstrap';
+import { Label } from 'react-bootstrap';
 
 const Score = function(props) {
   return (
@@ -17,13 +17,13 @@ const Score = function(props) {
       </div>
       <div>
         <span className={styles.currentGame}>Correct- 
-          <Badge className={styles.correct}>{props.correctGuesses}</Badge>
+          <Label bsStyle="success">{props.correctGuesses}</Label>
         </span>
         <span className={styles.currentGame}>Incorrect- 
-          <Badge className={styles.incorrect}>{props.incorrectGuesses}</Badge>
+          <Label bsStyle="danger">{props.incorrectGuesses}</Label>
         </span>
-        <span className={styles.currentGame}>Average Time- 
-          <Badge>{formatTime(props.averageTime)}</Badge>
+        <span className={styles.currentGame}>Average Time needed- 
+          <Label>{formatTime(props.averageTime)}</Label>
         </span>
       </div>
     </div>);

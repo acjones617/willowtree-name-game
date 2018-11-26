@@ -5,7 +5,7 @@ import styles from './quizmodes.css';
 const Toggles = function(props) {
   return (
     <div className={styles.container}>
-      <span>Special options:</span>
+      <span>Other possibilities:</span>
       {Object.keys(props.options).map(option => {
         return <Toggle
               key={option}

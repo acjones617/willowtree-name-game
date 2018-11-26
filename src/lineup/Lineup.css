@@ -2,6 +2,10 @@
   overflow: auto;
 }
 
+:local(.jumbo) {
+  padding: 0 20px 0 50px;
+}
+
 :local(.faceContainer) {
   box-sizing: border-box;
   border: 5px solid white;

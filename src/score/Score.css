@@ -6,11 +6,3 @@
   font-size: 1.25em;
   font-weight: 700;
 }
-
-:local(.correct) {
-  background-color: green;
-}
-
-:local(.incorrect) {
-  background-color: red;
-}

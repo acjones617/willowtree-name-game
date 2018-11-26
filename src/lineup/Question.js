@@ -18,7 +18,7 @@ function Question(props) {
     } else {
       question = `Who is ${employee.firstName} ${employee.lastName}?`
     }
-    return <h1 className={styles.question}>{question}</h1>
+    return <h2 className={styles.question}>{question}</h2>
   }
 }
 

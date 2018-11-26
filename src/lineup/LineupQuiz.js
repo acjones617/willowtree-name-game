@@ -4,7 +4,9 @@ import Question from './Question.js';
 import FilterOptions from './quizmodes/FilterOptions.js'
 import Toggles from './quizmodes/Toggles.js'
 import getRandomSelection from '../utils/randomSelection.js';
+import styles from './Lineup.css';
 import { NUM_CHOICES, DELAY_AFTER_CORRECT, FilterModes, ToggleModes } from '../utils/constants.js';
+import { Button, Jumbotron, Modal } from 'react-bootstrap';
 
 class LineupQuiz extends React.Component {
   constructor(props) {
@@ -17,6 +19,7 @@ class LineupQuiz extends React.Component {
       frozen: false,
       mode: FilterModes.Default,
       toggles: toggles,
+      showModal: false,
     };
     this.lineupCount = 0;
   }
@@ -60,32 +63,63 @@ class LineupQuiz extends React.Component {
     this.props.onModeChange();
   }
 
+  handleModalClose() {
+    this.setState({ showModal: false });
+  }
+
+  handleModalShow() {
+    this.setState({ showModal: true });
+  }
+
   render() {
     if (this.state.lineupEmployees.length) {
       return (
         <div>
-          <FilterOptions
-            currentMode={this.state.mode}
-            onClick={newMode => this.handleModeChange(newMode)}
-          />
-          <Toggles options={this.state.toggles}
-                   onChange={toggleName => this.handleToggle(toggleName)} />
-          <Question
-            employee={this.state.employeeToGuess}
-            showFace={this.state.toggles[ToggleModes.Reverse.value]}/>
-          <Lineup
-            key={this.lineupCount}
-            employees={this.state.lineupEmployees}
-            employeeToGuess={this.state.employeeToGuess}
-            frozen={this.state.frozen}
-            onGuess={(isCorrect) => this.handleGuess(isCorrect)}
-            mode={this.state.mode}
-            toggles={this.state.toggles}
-          />
+         {this.renderOptions()}
+          <Jumbotron className={styles.jumbo}>
+          
+            <Question
+              employee={this.state.employeeToGuess}
+              showFace={this.state.toggles[ToggleModes.Reverse.value]}/>
+            <Lineup
+              key={this.lineupCount}
+              employees={this.state.lineupEmployees}
+              employeeToGuess={this.state.employeeToGuess}
+              frozen={this.state.frozen}
+              onGuess={(isCorrect) => this.handleGuess(isCorrect)}
+              mode={this.state.mode}
+              toggles={this.state.toggles}
+            />
+          </Jumbotron>
         </div>
       );
     }
     return null;
+  }
+
+  renderOptions() {
+    return (
+      <React.Fragment>
+      <Button bsStyle="primary" onClick={this.handleModalShow.bind(this)}>
+        Select other game options
+      </Button>
+      <Modal show={this.state.showModal} onHide={this.handleModalClose.bind(this)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Other Game Options</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <FilterOptions
+            currentMode={this.state.mode}
+            onClick={newMode => this.handleModeChange(newMode)}
+          />
+          <Toggles
+            options={this.state.toggles}
+            onChange={toggleName => this.handleToggle(toggleName)}
+          />
+        </Modal.Body>
+      </Modal>
+      </React.Fragment>
+    );
   }
 }
 

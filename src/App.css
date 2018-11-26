@@ -1,3 +1,7 @@
 :local(.app) {
   text-align: center;
 }
+
+:local(.appHeader) {
+  font-family: fantasy;
+}

@@ -7,7 +7,7 @@ class FilterOptions extends React.Component {
   render() {
     return (
       <div className={styles.container}>
-        <span>Group to play from:</span>
+        <span>Group:</span>
         {Object.keys(FilterModes).map(mode => this.renderButton(FilterModes[mode]))}
       </div>
     );
