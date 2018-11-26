@@ -1,29 +1,23 @@
 import React from 'react';
 import styles from './App.css';
-import LineupQuiz from './lineup/LineupQuiz.js';
-import Score from './score/Score.js';
-import Stopwatch from './stopwatch/Stopwatch.js';
+import LineupQuiz from './lineup/LineupQuiz';
+import Score from './score/Score';
+import scoreConstants from './score/scoreConstants';
+import Stopwatch from './stopwatch/Stopwatch';
 import { Alert, Button } from 'react-bootstrap';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.initialScoreState = {
-      totalScore: 0,
-      currentRound: 1000,
-      correctGuesses: 0,
-      incorrectGuesses: 0,
-      averageTime: 0,
-    };
-    const score = { ...this.initialScoreState };
+    const score = { ...scoreConstants.INITIAL_SCORE_STATE };
     score.highScore = 0;
     this.state = {
       employees: [],
       score: score,
       startTime: new Date().getTime(),
+      isFrozen: false,
       error: false,
     }
-    this.filteredEmployeesByMode = {};
   }
 
   componentDidMount() {
@@ -52,11 +46,13 @@ class App extends React.Component {
   startKeepingScore() {
     this.keepScore = true;
     this.setState({ startTime: new Date().getTime() });
-    this.timeInterval = setInterval(this.decreaseCurrentRound.bind(this), 200);
+    this.timeInterval = setInterval(this.decreaseCurrentRound.bind(this),
+      scoreConstants.DECREASE_SCORE_TIME_MS);
   }
 
   handleGuess(isCorrect) {
     if (!this.keepScore) {
+      this.setState({ isFrozen: isCorrect });
       return;
     }
     const score = { ...this.state.score };
@@ -67,37 +63,40 @@ class App extends React.Component {
       score.averageTime = totalTime / score.correctGuesses;
       score.totalScore += score.currentRound;
       score.highScore = Math.max(score.highScore, score.totalScore);
-      this.frozen = true;
     } else {
       score.incorrectGuesses++;
-      score.totalScore -= 250;
+      score.totalScore -= scoreConstants.DECREASE_SCORE_WRONG;
     }
 
-    this.setState({ score });
+    this.setState({
+      score: score,
+      isFrozen: isCorrect,
+    });
   }
 
   decreaseCurrentRound() {
-    if (!this.frozen) {
+    if (!this.state.isFrozen) {
       const score = { ...this.state.score };
-      score.currentRound = Math.max(100, score.currentRound - 5);
+      score.currentRound = Math.max(scoreConstants.MIN_POINTS_CORRECT,
+        score.currentRound - scoreConstants.DECREASE_SCORE_TIME);
       this.setState({ score });
     }
   }
 
   handleNewLineup() {
     const score = { ...this.state.score };
-    score.currentRound = 1000;
-    this.frozen = false;
+    score.currentRound = scoreConstants.POINTS_START;
+    const isFrozen = false;
     this.setState({
+      isFrozen: isFrozen,
       score: score,
       startTime: new Date().getTime(),
     });
   }
 
-  handleModeChange(newMode) {
+  handleRefresh() {
     this.setState({
-      mode: newMode,
-      score: Object.assign(this.state.score, this.initialScoreState),
+      score: Object.assign(this.state.score, scoreConstants.INITIAL_SCORE_STATE),
     });
   }
 
@@ -125,10 +124,10 @@ class App extends React.Component {
     } else {
       return (
         <Button
-            title="Score"
-            bsStyle="info"
-            onClick={this.startKeepingScore.bind(this)}>
-              Keep Score?
+          title="Score"
+          bsStyle="info"
+          onClick={this.startKeepingScore.bind(this)}>
+            Keep Score?
         </Button>
       );
     }
@@ -137,11 +136,12 @@ class App extends React.Component {
   renderQuiz() {
     if (this.state.employees.length) {
       return (<LineupQuiz
-              employees={this.state.employees}
-              onGuess={isCorrect => this.handleGuess(isCorrect)}
-              onNewLineup={this.handleNewLineup.bind(this)}
-              onModeChange={this.handleModeChange.bind(this)}
-            />);
+                employees={this.state.employees}
+                isFrozen={this.state.isFrozen}
+                onGuess={isCorrect => this.handleGuess(isCorrect)}
+                onNewLineup={this.handleNewLineup.bind(this)}
+                onRefresh={this.handleRefresh.bind(this)}
+              />);
     }
     return null;
   }

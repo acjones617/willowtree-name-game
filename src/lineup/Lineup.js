@@ -33,6 +33,15 @@ class Lineup extends React.Component {
     }
   }
 
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleMove);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleMove);
+    clearInterval(this.hintInterval);
+  }
+
   beginHintMode() {
     this.hintInterval = setInterval(() => {
       const indicesToHide = [];
@@ -51,16 +60,10 @@ class Lineup extends React.Component {
     }, DELAY_BEFORE_HINT);
   }
 
-  componentDidMount() {
-    document.addEventListener('keydown', this.handleMove);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleMove);
-    clearInterval(this.hintInterval);
-  }
-
   handleGuess(index, isCorrect) {
+    if (this.props.isFrozen || this.state.selectedEmployees[index]) {
+      return;
+    }
     const selectedEmployees = this.state.selectedEmployees.slice();
     selectedEmployees[index] = true;
     this.setState({ selectedEmployees: selectedEmployees });
@@ -110,7 +113,7 @@ class Lineup extends React.Component {
   }
 
   handleMove(e) {
-    if (this.props.frozen) {
+    if (this.props.isFrozen) {
       return;
     }
     if (KeyDirections.RIGHT.has(e.keyCode)) {
@@ -140,7 +143,6 @@ class Lineup extends React.Component {
             isCorrect={isCorrect}
             isSelected={this.state.selectedEmployees[i]}
             faceFirst={!this.props.toggles[ToggleModes.Reverse.value]}
-            frozen={this.props.frozen}
             onClick={() => this.handleGuess(i, isCorrect)}
         />
         );

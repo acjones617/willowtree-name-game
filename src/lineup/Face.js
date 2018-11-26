@@ -15,27 +15,22 @@ class Face extends React.Component {
     }
   }
 
-  handleGuess() {
-    if (!this.props.frozen && !this.props.isSelected) {
-      this.props.onClick();
-    }
-  }
-
   handleKeydown(e) {
     if (this.props.isActive && e.keyCode === KeyCodes.ENTER) {
-      this.handleGuess();
+      this.props.onClick();
     }
   }
 
   render() {
     return (
-      <div className={this.getFaceClassName()}
-           tabIndex='0'
-           ref={this.faceRef}
-           onClick={this.handleGuess.bind(this)}
-           onKeyDown={(e) => this.handleKeydown(e)}>
-            {this.maybeRenderImg()}
-            {this.maybeRenderName()}
+      <div
+        className={this.getFaceClassName()}
+        tabIndex='0'
+        ref={this.faceRef}
+        onClick={this.props.onClick}
+        onKeyDown={(e) => this.handleKeydown(e)}>
+          {this.maybeRenderImg()}
+          {this.maybeRenderName()}
       </div>
     );
   }
