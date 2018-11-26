@@ -4,10 +4,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Try it out
 
-`git clone https://github.com/acjones617/willowtree-name-game.git`
-`cd willowtree-name-game/`
-`npm install`
-`npm start`
+```
+git clone https://github.com/acjones617/willowtree-name-game.git`
+cd willowtree-name-game/
+npm install
+npm start
+```
+
+Navigate to http://localhost:3000/
 
 ## How to play
 
