@@ -59,8 +59,7 @@ class LineupQuiz extends React.Component {
    * mode and triggering a refresh on the parent component.
    */
   handleModeChange(newMode, newToggles) {
-    this.setState({ mode: newMode, toggles: newToggles });
-    this.getNewLineup();
+    this.setState({ mode: newMode, toggles: newToggles }, this.getNewLineup.bind(this));
     this.props.onRefresh();
   }
 

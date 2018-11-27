@@ -27,6 +27,13 @@ class Face extends React.Component {
     }
   }
 
+  /**
+   * @returns {string} the transformed url, prefixed with http:
+   */
+  getImageUrl() {
+    return `http:${this.props.employee.headshot.url}`;
+  }
+
   render() {
     return (
       <div
@@ -47,11 +54,7 @@ class Face extends React.Component {
    */
   maybeRenderImg() {
     if (this.props.isSelected || this.props.faceFirst) {
-      return (
-        <img
-        src={this.props.employee.headshot.url}
-        alt={this.props.employee.headshot.alt}/>
-      );
+      return <img src={this.getImageUrl()} alt={this.props.employee.headshot.alt}/>;
     }
     return null;
   }
